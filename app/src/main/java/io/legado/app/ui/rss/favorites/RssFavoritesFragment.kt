@@ -37,10 +37,18 @@ class RssFavoritesFragment() : VMBaseFragment<RssFavoritesViewModel>(R.layout.fr
     private val adapter: RssFavoritesAdapter by lazy {
         RssFavoritesAdapter(requireContext(), this@RssFavoritesFragment)
     }
+    private var firstLoad = true
 
     override fun onFragmentCreated(view: View, savedInstanceState: Bundle?) {
         initView()
-        loadArticles()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (firstLoad) {
+            loadArticles()
+            firstLoad = false
+        }
     }
 
     private fun initView() = binding.run {
